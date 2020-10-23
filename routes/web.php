@@ -14,22 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
-
-Route::group(['prefix' => 'admin'], function(){
-
-  Route::get('salut', function(){
-    return 'salut';
-  });
-
-  Route::get('salut/{slug}-{id}', function($slug, $id){
-    return "Lien : " . route('salut', ['slug' => $slug, 'id' => $id]);
-  })->where('slug', '[a-z0-9\-]+')
-    ->where('id', '[0-9]+')
-    ->name('salut');
-
-});
-
 Route::get('/', function () {
     return view('welcome');
 });

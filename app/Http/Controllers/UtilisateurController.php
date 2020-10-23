@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Utilisateur;
+use Illuminate\Support\Facades\Hash;
 
 class UtilisateurController extends Controller
 {
@@ -14,7 +15,8 @@ class UtilisateurController extends Controller
      */
     public function index()
     {
-        //
+        $user = Utilisateur::all();
+        return $user;
     }
 
     /**
@@ -25,7 +27,14 @@ class UtilisateurController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $request->validate([
+        'login' => 'required',
+        'email' => 'required',
+        'phone_number' => 'required',
+        'password' => 'required'
+      ]);
+      // create a post
+      return Utilisateur::create($request->all());
     }
 
     /**
@@ -36,8 +45,27 @@ class UtilisateurController extends Controller
      */
     public function show($id)
     {
-        //
+      $user = Utilisateur::find($id);
+      return $user;
     }
+
+    /**
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function login(Request $request)
+    {
+      $login = $request->input('login');
+      $password = $request->input('password');
+      $data = Utilisateur::where('login', '=', $login)->first();
+      if ($data && Hash::check($password, $data->password)) return response()->json(['status' => 200, 'token' => $data->token, 'login' => $data->login]);
+      return response()->json(['status' => 401]);
+    }
+
+    public function getfix()
+    {
+      return "Cette page ne sert à rien... Pour l'instant...";
+     }
 
     /**
      * Update the specified resource in storage.

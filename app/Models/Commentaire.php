@@ -10,10 +10,11 @@ class Commentaire extends Model
     use HasFactory;
 
     protected $fillable = [
-      'id_user',
+      'login_user',
       'id_bar',
       'content'
     ];
 
     public $timestamps = false;
+
 }

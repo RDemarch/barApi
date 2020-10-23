@@ -25,7 +25,13 @@ class CommentaireController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $request->validate([
+        'content' => 'required',
+        'id_bar' => 'required',
+        'id_user' => 'required'
+      ]);
+      // create a post
+      return Commentaire::create($request->all());
     }
 
     /**
@@ -36,7 +42,16 @@ class CommentaireController extends Controller
      */
     public function show($id)
     {
-        //
+        $comments = Commentaire::where('id_bar', '=', $id)
+                    ->select('commentaires.content', 'utilisateurs.login')
+                    ->leftJoin('utilisateurs', 'utilisateurs.id', '=', 'commentaires.id_user')->get();
+        return $comments;
+    }
+
+    public function showCommentsBar($id)
+    {
+        $comments = Commentaire::where('id_bar', '=', $id)->get();
+        return $comments;
     }
 
     /**
@@ -59,6 +74,6 @@ class CommentaireController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Commentaire::destroy($id);
     }
 }

@@ -26,4 +26,10 @@ class Bar extends Model
     ];
 
     public $timestamps = false;
+
+
+    public function commentaires()
+    {
+        return $this->hasMany(Commentaire::class, 'id_bar');
+    }
 }

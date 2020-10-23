@@ -83,4 +83,5 @@ class BarController extends Controller
         // delete a post
         return Bar::destroy($id);
     }
+
 }
