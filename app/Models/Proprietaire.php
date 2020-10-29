@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Commentaire extends Model
+class Proprietaire extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-      'token_user',
-      'id_bar',
-      'content'
+      'id_user',
+      'id_bar'
     ];
 
     public $timestamps = false;
-
 }

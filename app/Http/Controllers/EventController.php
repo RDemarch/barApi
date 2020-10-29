@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Commentaire;
+use App\Models\Event;
 
-class CommentaireController extends Controller
+class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class CommentaireController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -26,12 +26,13 @@ class CommentaireController extends Controller
     public function store(Request $request)
     {
       $request->validate([
-        'content' => 'required',
+        'date' => 'required',
+        'titre' => 'required',
         'id_bar' => 'required',
-        'token_user' => 'required'
+        'description' => 'required'
       ]);
       // create a post
-      return Commentaire::create($request->all());
+      return Event::create($request->all());
     }
 
     /**
@@ -42,17 +43,9 @@ class CommentaireController extends Controller
      */
     public function show($id)
     {
-        $comments = Commentaire::where('id_bar', '=', $id)
-                    ->select('commentaires.content', 'utilisateurs.login')
-                    ->leftJoin('utilisateurs', 'utilisateurs.token', '=', 'commentaires.token_user')->get();
-        return $comments;
+        $events = Event::where('id_bar', '=', $id)->get();
+        return $events;
     }
-
-    // public function showCommentsBar($id)
-    // {
-    //     $comments = Commentaire::where('id_bar', '=', $id)->get();
-    //     return $comments;
-    // }
 
     /**
      * Update the specified resource in storage.
@@ -74,6 +67,19 @@ class CommentaireController extends Controller
      */
     public function destroy($id)
     {
-        return Commentaire::destroy($id);
+        //
+    }
+
+    /**
+     * Register for an event
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request, $id)
+    {
+      $userRegister = Event::where('id', '=', $id)->update(['listParticpant' => $request->all()]);
+      return $userRegister;
     }
 }

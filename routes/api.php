@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Bar;
 use App\Models\Commentaire;
 use App\Models\Utilisateur;
+use App\Models\Event;
 Use App\Http\Controllers\Api\AuthController;
 
 
@@ -25,8 +26,11 @@ Route::get('bar/comments/{id}', 'BarController@showComments');
 Route::apiResource('comments', 'CommentaireController');
 Route::get('showCommentsBar/{id}', 'CommentaireController@showCommentsBar');
 
+Route::apiResource('events', 'EventController');
+
 Route::apiResource('utilisateur', 'UtilisateurController');
 Route::post('utilisateur/login', 'UtilisateurController@login');
+Route::post('utilisateur/newPassword', 'UtilisateurController@newPassword');
 
 Route::get('fix', 'UtilisateurController@getfix');
 
